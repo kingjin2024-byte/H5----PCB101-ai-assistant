@@ -12,6 +12,8 @@
   const personalInfoForm = document.querySelector("#personalInfoForm");
   const personalInfoHint = document.querySelector("#personalInfoHint");
   const jobDetail = document.querySelector("#jobDetail");
+  const jobShareCard = new JobShareCard();
+  let activeJobShareData = null;
   let stage = "region";
   let busy = false;
   let selectedCareer = profile.career;
@@ -165,6 +167,7 @@
     document.querySelector("#detailCompanyLogo").innerHTML = escapeHtml(company.slice(0,4).replace(/(.{2})/, "$1<br>"));
     document.querySelector("#detailTags").innerHTML = [...article.querySelectorAll(".job-card-footer span")].map(tag => `<span>${escapeHtml(tag.textContent)}</span>`).join("");
     document.querySelector("#detailIntro").textContent = `负责${title}岗位相关工作，推动PCB工程资料处理、制造衔接与交付效率持续改善。`;
+    activeJobShareData = {jobName:title,company,companyIntro:company.includes("股份")?"上市公司 · PCB行业领先企业":"PCB行业优质招聘企业",salary:salaryCity[0].trim(),location:(salaryCity[1]||selectedLocations).trim(),experience:experienceEducation[0]||"经验不限",education:experienceEducation[1]||"学历不限",tags:[...article.querySelectorAll(".job-card-footer span")].map(tag=>tag.textContent)};
     document.querySelector("#applyJob").textContent = "一键投递";
     document.querySelector("#contactHr").textContent = "立即沟通";
     jobDetail.hidden = false;
@@ -326,6 +329,7 @@
   });
   document.querySelector("#closeJobDetail").addEventListener("click", closeJobDetail);
   document.querySelector("#backToJobs").addEventListener("click", closeJobDetail);
+  document.querySelector("#shareJob").addEventListener("click", () => jobShareCard.open(activeJobShareData || {}));
   document.querySelector("#applyJob").addEventListener("click", event => { event.currentTarget.textContent = "已投递"; });
   document.querySelector("#contactHr").addEventListener("click", event => { event.currentTarget.textContent = "已发起沟通"; });
   prototypePage === 5 ? southChinaFollowup() : regionIntro();
