@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f5faf7" />
+  <title>PCB101 AI助手</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./avatar-overrides.css" />
+  <link rel="stylesheet" href="./header-overrides.css" />
+  <link rel="stylesheet" href="./policy-modal.css" />
+  <link rel="stylesheet" href="../prototype-pages.css" />
+  <link rel="stylesheet" href="../banner-fit.css" />
+  <link rel="stylesheet" href="../banner-composed.css" />
+  <link rel="stylesheet" href="../banner-compact.css" />
+  <link rel="stylesheet" href="./match-summary.css" />
+  <link rel="stylesheet" href="./category-match.css" />
+  <link rel="stylesheet" href="./personal-info.css" />
+  <link rel="stylesheet" href="./job-card-refresh.css" />
+  <link rel="stylesheet" href="./job-detail.css" />
+</head>
+<body data-prototype-page="2">
+  <main class="app-shell">
+    <header class="app-header">
+      <nav class="mini-nav" aria-label="小程序导航栏">
+        <button class="icon-button back" type="button" aria-label="返回" onclick="history.back()">‹</button>
+        <strong>PCB101 行业第一的 AI 招聘平台</strong>
+        <span class="mini-controls" aria-hidden="true"><b>•••</b><i></i></span>
+      </nav>
+      <section class="brand-banner unified-header-banner composed-banner">
+        <img class="composed-logo" src="../assets/pcb101-logo.png" alt="PCB101 Logo" />
+        <div class="composed-copy"><h1>我是<span>幺弟</span></h1><p>PCB 圈最懂你的</p><strong>招聘小助手</strong></div>
+        <img class="composed-robot" src="../assets/yaodi-greeting.png" alt="挥手的幺弟机器人" />
+      </section>
+    </header>
+
+    <section id="conversation" class="conversation" aria-live="polite" aria-label="AI 对话"></section>
+
+    <div id="listening" class="listening" hidden>
+      <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <span>正在聆听…</span>
+    </div>
+
+    <footer class="composer">
+      <button id="micButton" class="mic-button" type="button" aria-label="模拟语音输入">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="3" width="8" height="12" rx="4"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg>
+      </button>
+      <label class="input-wrap"><span class="sr-only">输入消息</span><input id="messageInput" autocomplete="off" placeholder="输入消息…" /></label>
+      <button id="sendButton" class="send-button" type="button">发送</button>
+    </footer>
+
+    <section id="policyModal" class="policy-overlay" role="dialog" aria-modal="true" aria-labelledby="policyTitle">
+      <div class="policy-dialog">
+        <h2 id="policyTitle">服务协议和隐私政策</h2>
+        <p>为了向您提供 AI 问答、职位推荐、求职进度保存等服务，我们需要在您同意后收集和使用必要信息。</p>
+        <p>请您仔细阅读 <a href="#service">《服务协议》</a> 和 <a href="#privacy">《隐私政策》</a>，了解我们如何收集、使用、存储和保护您的信息，以及您享有的相关权利。</p>
+        <div class="policy-actions">
+          <button id="policyReject" class="policy-reject" type="button">拒绝</button>
+          <button id="policyAccept" class="policy-accept" type="button">同意并继续</button>
+        </div>
+      </div>
+    </section>
+    <section id="personalInfoModal" class="personal-overlay" role="dialog" aria-modal="true" aria-labelledby="personalInfoTitle" hidden>
+      <form id="personalInfoForm" class="personal-dialog">
+        <button id="closePersonalInfo" class="personal-close" type="button" aria-label="暂不填写">×</button>
+        <h2 id="personalInfoTitle">完善个人信息</h2>
+        <p id="personalInfoHint">方便投递职位后，HR 第一时间联系您</p>
+        <div class="personal-grid">
+          <label><span>姓名</span><input name="name" required placeholder="请输入姓名" /></label>
+          <label><span>性别</span><select name="gender" required><option value="">请选择</option><option>男</option><option>女</option></select></label>
+          <label><span>PCB行业工作年限</span><select name="years" required><option value="">请选择</option><option>0-1年</option><option>1-3年</option><option>3-5年</option><option>5-10年</option><option>10年以上</option></select></label>
+          <label><span>学历</span><select name="education" required><option value="">请选择</option><option>高中/中专</option><option>大专</option><option>本科</option><option>硕士及以上</option></select></label>
+          <label><span>目前公司名称</span><input name="company" required placeholder="请输入公司名称" /></label>
+          <label><span>目前岗位名称</span><input name="currentJob" required placeholder="请输入岗位名称" /></label>
+        </div>
+        <div class="personal-actions"><button id="skipPersonalInfo" type="button">暂不填写</button><button type="submit">确认并查看全部岗位</button></div>
+      </form>
+    </section>
+    <section id="jobDetail" class="job-detail-view" aria-labelledby="jobDetailTitle" hidden>
+      <header class="job-detail-nav"><button id="closeJobDetail" type="button" aria-label="返回职位列表">‹</button><strong>职位详情</strong><span class="mini-controls" aria-hidden="true"><b>•••</b><i></i></span></header>
+      <div class="job-detail-scroll">
+        <article class="job-hero-card">
+          <div id="detailCompanyLogo" class="detail-company-logo">PCB<br />101</div>
+          <div class="detail-main"><div class="detail-company-line"><b id="detailCompany">PCB101招聘企业</b><span>5000人以上</span></div><h1 id="jobDetailTitle">MI工程师</h1><strong id="detailSalary">15–23K <em>/ 月</em></strong><p><span id="detailCity">深圳</span><i></i><span id="detailExperience">3-5年</span><i></i><span id="detailEducation">本科</span><i></i><span>全职</span></p><p class="detail-address">⌖ 工作地点：高新产业园</p><div id="detailTags" class="detail-tags"></div></div>
+        </article>
+        <article class="detail-section benefits"><span class="detail-section-icon">♧</span><div><h2>福利待遇</h2><p><b>五险一金</b><b>包吃包住</b><b>年终奖</b><b>专业培训</b><b>晋升机会</b></p></div></article>
+        <article class="detail-section"><span class="detail-section-icon">▣</span><div><h2>岗位简介</h2><p id="detailIntro">负责岗位相关工作，推动PCB工程资料处理、制造衔接与交付效率持续改善。</p></div></article>
+        <article class="detail-section"><span class="detail-section-icon">☑</span><div><h2>岗位职责</h2><ul><li>负责PCB工程资料的制作、审核与维护，确保资料准确完整；</li><li>协同生产、工艺等部门，推动制造衔接与交付效率提升。</li></ul></div></article>
+        <article class="detail-section"><span class="detail-section-icon">♙</span><div><h2>任职要求</h2><ol><li>大专及以上学历，电子、机械、自动化等相关专业；</li><li>3年以上PCB相关工作经验，熟悉PCB工艺流程；</li><li>熟练使用相关工程设计及生产软件；</li><li>具备良好的沟通协调和问题解决能力；</li><li>工作细致认真，具备责任心与团队合作精神。</li></ol></div></article>
+        <article class="detail-section"><span class="detail-section-icon">♜</span><div><h2>公司介绍</h2><p><span id="detailCompanyAgain">招聘企业</span>专注于PCB、HDI及软硬结合板的研发、生产与销售，致力于为客户提供高品质的互连解决方案。</p></div></article>
+      </div>
+      <footer class="job-detail-actions"><button id="backToJobs" type="button">↩<small>返回列表</small></button><button id="applyJob" type="button">一键投递</button><button id="contactHr" type="button">立即沟通</button></footer>
+    </section>
+  </main>
+  <script src="./data.js"></script>
+  <script src="../prototype-pages.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

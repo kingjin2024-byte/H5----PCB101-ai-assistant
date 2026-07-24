@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1844 520" role="img" aria-labelledby="title desc">
+  <title id="title">PCB101 幺弟招聘助手</title>
+  <desc id="desc">左侧 PCB101 标志，中间招聘助手文案，右侧为挥手的幺弟机器人</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fdfb"/>
+      <stop offset=".56" stop-color="#eef9f5"/>
+      <stop offset="1" stop-color="#e5f6f0"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0b6e53"/>
+      <stop offset="1" stop-color="#08a861"/>
+    </linearGradient>
+    <clipPath id="robotClip"><rect x="1030" y="0" width="814" height="520"/></clipPath>
+  </defs>
+
+  <rect width="1844" height="520" fill="url(#bg)"/>
+  <g fill="none" stroke="#64bca0" stroke-width="2" opacity=".12">
+    <path d="M0 94h132l34 34h88M0 392h92l38-38h118M1588 0v88l-44 44v76M1844 126h-116l-42 42h-92M1844 390h-90l-34-34h-96"/>
+    <path d="M24 150h70l28 28v86M1790 40v96l-32 32v78M1680 36v62l-44 44v94"/>
+    <circle cx="166" cy="128" r="7" fill="#64bca0"/><circle cx="130" cy="354" r="7" fill="#64bca0"/><circle cx="1686" cy="168" r="7" fill="#64bca0"/><circle cx="1720" cy="356" r="7" fill="#64bca0"/>
+  </g>
+
+  <g font-family="Inter, PingFang SC, Microsoft YaHei, sans-serif">
+    <text x="438" y="205" fill="#18322c" font-size="82" font-weight="750">我是<tspan fill="#078d55">幺弟</tspan></text>
+    <text x="440" y="308" fill="#18322c" font-size="58" font-weight="650">PCB 圈最懂</text>
+    <text x="440" y="405" fill="#18322c" font-size="58" font-weight="650">你的 <tspan fill="url(#accent)" font-weight="800">招聘小助手</tspan></text>
+  </g>
+
+</svg>

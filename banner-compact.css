@@ -1,0 +1,39 @@
+.unified-header-banner.composed-banner{
+  height:118px!important;
+  margin-top:0!important;
+}
+.unified-header-banner.composed-banner .composed-logo{
+  left:18px!important;
+  top:23px!important;
+  width:68px!important;
+  height:68px!important;
+  border-radius:16px;
+}
+.unified-header-banner.composed-banner .composed-copy{
+  left:124px;
+  top:17px;
+}
+.unified-header-banner.composed-banner .composed-copy h1{
+  margin-bottom:3px;
+  font-size:22px;
+}
+.unified-header-banner.composed-banner .composed-copy p{
+  font-size:14px;
+}
+.unified-header-banner.composed-banner .composed-copy strong{
+  font-size:22px;
+}
+.unified-header-banner.composed-banner .composed-robot{
+  right:-1px!important;
+  top:-29px!important;
+  width:137px!important;
+  height:148px!important;
+}
+@media(max-width:350px){
+  .unified-header-banner.composed-banner{height:110px!important}
+  .unified-header-banner.composed-banner .composed-logo{left:12px!important;top:22px!important;width:61px!important;height:61px!important}
+  .unified-header-banner.composed-banner .composed-copy{left:91px;top:18px}
+  .unified-header-banner.composed-banner .composed-copy h1,.unified-header-banner.composed-banner .composed-copy strong{font-size:18px}
+  .unified-header-banner.composed-banner .composed-copy p{font-size:12px}
+  .unified-header-banner.composed-banner .composed-robot{right:-8px!important;top:-26px!important;width:123px!important;height:136px!important}
+}

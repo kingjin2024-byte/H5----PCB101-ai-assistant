@@ -1,0 +1,13 @@
+.unified-header-banner{
+  height:clamp(104px,29vw,122px)!important;
+  aspect-ratio:auto!important;
+  overflow:visible!important;
+}
+.unified-header-banner>.banner-art{
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  object-fit:contain!important;
+  transform:translateY(clamp(-15px,-3.5vw,-10px));
+  transform-origin:center top;
+}
