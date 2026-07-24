@@ -93,6 +93,7 @@
     const value = normalizeIntent(text).replace(/[啊呀吧呢啦]$/g, "");
     return noWords.has(value) || /^(不是|不对)(的)?$/.test(value) || value.split(/[和及]/).every(part => noWords.has(part));
   };
+  const allCitiesAccepted = text => new Set(["都可", "都可以", "可以"]).has(normalizeIntent(text));
   const willing = text => /愿意|可以|好的|好啊|继续/.test(text);
   const delay = (fn, ms=420) => { busy=true; setTimeout(() => { fn(); busy=false; }, ms); };
   const careerJobs = {
@@ -124,7 +125,7 @@
   function addCategoryMatchCard() {
     const card = document.createElement("div");
     card.className = "category-match-card";
-    card.innerHTML = `<span class="category-target" aria-hidden="true">◎</span><div><small>根据地区和工种初步匹配</small><strong>535 <em>个岗位</em></strong><p>继续补充信息，推荐会更精准</p></div>`;
+    card.innerHTML = `<span class="category-target" aria-hidden="true">◎</span><div><small>根据地区和工种初步匹配</small><strong>535 <em>个岗位</em></strong><p>继续补充信息，推荐会更精准</p></div><img class="match-yaodi-like" src="../assets/yaodi-thumbs-up.png" alt="幺弟点赞" />`;
     conversation.append(card); scrollLatest();
   }
   function showCategoryMatches() {
@@ -135,7 +136,7 @@
   function addPreciseMatchCard() {
     const card = document.createElement("div");
     card.className = "precise-match-card";
-    card.innerHTML = `<span class="precise-icon" aria-hidden="true">◎</span><div><small>根据细分岗位精准匹配</small><strong>48 <em>个岗位</em></strong></div>`;
+    card.innerHTML = `<span class="precise-icon" aria-hidden="true">◎</span><div><small>根据细分岗位精准匹配</small><strong>48 <em>个岗位</em></strong></div><img class="match-yaodi-like" src="../assets/yaodi-thumbs-up.png" alt="幺弟点赞" />`;
     conversation.append(card); scrollLatest();
   }
   function showPreciseMatches() {
@@ -229,8 +230,9 @@
     addMessage("user", value); input.value = "";
     if (stage === "regionCity") {
       const cityChoices = extractCities(value);
-      selectedLocations = value.includes("都可以") ? selectedLocations : (cityChoices.length ? cityChoices.join("、") : value);
-      if (value.includes("都可以")) {
+      const acceptsAllCities = allCitiesAccepted(value);
+      selectedLocations = acceptsAllCities ? selectedLocations : (cityChoices.length ? cityChoices.join("、") : value);
+      if (acceptsAllCities) {
         stage="career";
         delay(() => askCareerDirection());
       } else {
