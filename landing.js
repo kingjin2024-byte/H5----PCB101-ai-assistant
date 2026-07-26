@@ -24,11 +24,8 @@
   }
   function showAssistant(targetPage) {
     page = targetPage;
-    shell.hidden = true;
-    document.querySelector(".prototype-pager")?.remove();
-    frame.hidden = false;
-    frame.src = `./ai-job-assistant/?page=${targetPage}&embedded=1`;
-    document.body.classList.remove("wechat-login-locked");
+    // file:// 直接打开时，Safari 对跨目录 iframe 的资源加载不稳定，统一使用顶层路由。
+    window.location.assign(`./ai-job-assistant/index.html?page=${targetPage}`);
   }
 
   document.querySelector("#openWechatLogin").addEventListener("click", event => {

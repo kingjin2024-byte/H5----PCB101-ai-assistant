@@ -25,7 +25,7 @@
   const embedded = window.parent !== window;
   const returnToLogin = () => {
     if (embedded) window.parent.postMessage({ source: "pcb101-prototype", action: "show-page-2" }, window.location.origin);
-    else window.location.href = "../";
+    else window.location.href = "../index.html";
   };
 
   document.body.dataset.prototypePage = String(prototypePage);
@@ -35,15 +35,15 @@
     document.body.classList.add("policy-locked");
   }
   policyAccept.addEventListener("click", () => {
-    window.location.href = "./?page=4";
+    window.location.href = "./index.html?page=4";
   });
   policyReject.addEventListener("click", () => {
     returnToLogin();
   });
   window.PCB101_PAGER.init({
     page: prototypePage,
-    onPrev: () => { prototypePage === 3 ? returnToLogin() : window.location.href = prototypePage === 4 ? "./?page=3&embedded=1" : "./?page=4&embedded=1"; },
-    onNext: () => { window.location.href = prototypePage === 3 ? "./?page=4" : "./?page=5"; }
+    onPrev: () => { prototypePage === 3 ? returnToLogin() : window.location.href = prototypePage === 4 ? "./index.html?page=3&embedded=1" : "./index.html?page=4&embedded=1"; },
+    onNext: () => { window.location.href = prototypePage === 3 ? "./index.html?page=4" : "./index.html?page=5"; }
   });
 
   const aiAvatar = `<span class="avatar ai-avatar"><img src="../assets/yaodi-avatar.png" alt="幺弟" /></span>`;
@@ -106,9 +106,16 @@
     "华南":"华南地区", "华南地区":"华南地区", "华东":"华东地区", "华东地区":"华东地区", "华中":"华中地区", "华中地区":"华中地区",
     "西南":"西南地区", "西南地区":"西南地区", "华北":"华北及东北地区", "东北":"华北及东北地区", "华北东北":"华北及东北地区",
     "华北及东北地区":"华北及东北地区", "港澳台":"港澳台地区", "港澳台地区":"港澳台地区", "马来西亚":"马来西亚", "泰国":"泰国",
-    "越南":"越南", "新加坡":"新加坡", "墨西哥":"墨西哥", "欧洲":"欧洲", "美国":"美国"
+    "越南":"越南", "新加坡":"新加坡", "墨西哥":"墨西哥", "欧洲":"欧洲", "美国":"美国",
+    "海外":"海外机会", "海外机会":"海外机会", "不限":"不限地区", "不限地区":"不限地区", "全国":"不限地区"
   };
-  const resolveRegion = text => regionAliases[normalizeIntent(text).replace(/都可以(看)?$/, "")] || "";
+  const resolveRegion = text => {
+    const value = normalizeIntent(text).replace(/(都可以看?|优先|发展|工作|求职|机会)$/g, "");
+    const exact = regionAliases[value];
+    if (exact) return exact;
+    const alias = Object.keys(regionAliases).sort((a,b) => b.length - a.length).find(key => value.includes(key));
+    return alias ? regionAliases[alias] : "";
+  };
   const extractCities = text => [...new Set(Object.values(regionGroups).flat().filter(city => text.includes(city)))];
   function askSpecificJob() {
     const camHint = selectedCareer === careers[1] ? "\n可以直接说岗位关键词，例如：抗阻、菲林、MI、Gerber、拼版等。" : "\n直接说岗位名称或关键词即可。";
@@ -235,20 +242,14 @@
       const cityChoices = extractCities(value);
       const acceptsAllCities = allCitiesAccepted(value);
       selectedLocations = acceptsAllCities ? selectedLocations : (cityChoices.length ? cityChoices.join("、") : value);
-      if (acceptsAllCities) {
-        stage="career";
-        delay(() => askCareerDirection());
-      } else {
-        stage="confirmRegion";
-        delay(()=>addMessage("ai",`已记录您的优先城市：${selectedLocations}。\n请问是否正确？`));
-      }
+      stage="career";
+      delay(() => askCareerDirection());
     }
     else if (stage === "region") {
       const resolvedRegion = resolveRegion(value);
       const resolvedCities = extractCities(value);
-      if (resolvedRegion === "华南地区") { selectedLocations = "华南地区"; sessionStorage.setItem("pcb101_region_input", value); busy = true; setTimeout(() => { window.location.href = "./?page=5"; }, 320); }
-      else if (resolvedRegion) { selectedLocations = resolvedRegion; stage="regionCity"; delay(()=>{addMessage("ai",`已识别您希望在${resolvedRegion}发展。\n以下城市您有优先选择，还是都可以看？\n如果都可以，直接回复“都可以”。`);addChips(`${resolvedRegion}城市`,regionGroups[resolvedRegion]);}); }
-      else if (resolvedCities.length) { selectedLocations = resolvedCities.join("、"); stage="confirmRegion"; delay(()=>addMessage("ai",`我识别到您的期望城市是：${selectedLocations}。\n请问是否正确？`)); }
+      if (resolvedRegion) { selectedLocations = resolvedRegion; stage="career"; delay(() => askCareerDirection()); }
+      else if (resolvedCities.length) { selectedLocations = resolvedCities.join("、"); stage="career"; delay(() => askCareerDirection()); }
       else { delay(()=>addMessage("ai","暂未识别到预设地区或城市，请换一种方式描述。")); }
     }
     else if (stage === "confirmRegion") {
