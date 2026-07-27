@@ -1,6 +1,9 @@
 /* The circuit SVG includes an opaque rectangular canvas on some WebViews. */
 .my-page .my-circuit { display: none; }
 
+/* Keep the green profile area as one clean rectangle. */
+.my-page .my-hero { border-radius: 0; }
+
 /* Always use the alpha-cutout robot asset for the AI entrance. */
 .my-page .ask-yaodi img {
   content: url('../assets/yaodi-floating.png');
