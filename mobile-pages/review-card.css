@@ -1,0 +1,14 @@
+.review-page .review-empty {
+  padding: 34px 18px 100px;
+}
+
+.review-reference-art {
+  display: block;
+  width: min(100%, 360px);
+  margin: 0 auto 38px;
+  object-fit: contain;
+}
+
+.review-page .review-empty h2 {
+  margin: 0 0 14px;
+}

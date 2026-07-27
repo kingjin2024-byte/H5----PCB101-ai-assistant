@@ -1,0 +1,14 @@
+.interview-page .interview-empty {
+  padding: 34px 18px 100px;
+}
+
+.interview-reference-art {
+  display: block;
+  width: min(100%, 360px);
+  margin: 0 auto 38px;
+  object-fit: contain;
+}
+
+.interview-page .interview-empty h2 {
+  margin: 0 0 14px;
+}

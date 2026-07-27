@@ -1,0 +1,43 @@
+.settings-list .setting-icon {
+  font-size: 0;
+  background-color: #eef8f3;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.settings-list .setting-phone { background-image: url('../assets/account-setting-icons/phone.png'); }
+.settings-list .setting-agreement { background-image: url('../assets/account-setting-icons/agreement.png'); }
+.settings-list .setting-privacy { background-image: url('../assets/account-setting-icons/privacy.png'); }
+.settings-list .setting-feedback { background-image: url('../assets/account-setting-icons/feedback.png'); }
+
+/* Account settings footer: transparent robot and subtle PCB circuitry. */
+.settings-footer-circuit {
+  position: absolute;
+  right: 4px;
+  bottom: 10px;
+  width: 230px;
+  height: 130px;
+  background: url('../assets/pcb-circuit-bg.svg') right bottom / contain no-repeat;
+  opacity: .09;
+  pointer-events: none;
+}
+
+.settings-brand {
+  z-index: 2;
+  bottom: 28px;
+  color: #8fcdb9;
+}
+
+.settings-brand img { width: 28px; height: 28px; border-radius: 8px; }
+.settings-brand small { color: #95a8a1; }
+
+.settings-robot {
+  z-index: 2;
+  right: 19px;
+  bottom: -7px;
+  width: 132px;
+  height: 132px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 9px rgba(4, 89, 56, .12));
+}
